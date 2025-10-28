@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ninaddemoadf"
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"adls_accountKey": {
+			"value": ""
+		},
+		"on_prem_files_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "ninadadfproject.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "adfprojectdb"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "adminadmin"
+		},
+		"adls_properties_typeProperties_url": {
+			"value": "https://ninaddemostorage.dfs.core.windows.net/"
+		},
+		"github_json_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/"
+		},
+		"on_prem_files_properties_typeProperties_host": {
+			"value": "C:\\Azure Demo"
+		},
+		"on_prem_files_properties_typeProperties_userId": {
+			"value": "desktop-q9am7d9\\user"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

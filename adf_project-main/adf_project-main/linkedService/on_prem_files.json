@@ -1,0 +1,17 @@
+{
+	"name": "on_prem_files",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\Azure Demo",
+			"userId": "desktop-q9am7d9\\user",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI2ZTY2M2QyOC1jYTc5LTRiYTktYmFiNi03YThjNDc2NTViYTYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "demo-shir",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

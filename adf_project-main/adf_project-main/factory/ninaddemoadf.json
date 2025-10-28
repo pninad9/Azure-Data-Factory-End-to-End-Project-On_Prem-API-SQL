@@ -1,0 +1,9 @@
+{
+	"name": "ninaddemoadf",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "3d36db33-dc74-46b3-8aad-1d3758c638f1",
+		"tenantId": "dec03107-202a-46f9-8bc5-8185e4891442"
+	}
+}
