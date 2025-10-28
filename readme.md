@@ -13,7 +13,7 @@ This project is a production-style Azure Data Factory (ADF) build that ingests d
 
 Orchestration is handled by a Parent Pipeline that chains the three ingestion paths and kicks off transformations. Hybrid connectivity to the on-prem share is enabled via Self-Hosted Integration Runtime (SHIR). A publish folder is included for ARM-based CI/CD.
 
-<img src="screenshots/azure-resource-group.png" alt="Azure Resource Group with Storage, ADF, Databricks, SQL, Access Connector" />
+<img src="https://github.com/pninad9/Azure-Data-Factory-End-to-End-Project-On_Prem-API-SQL/blob/0402797e21add6a7950eb2ce25ad733a9aa5e055/ScreenShot/Data%20Architecture.png" />
 
 ## Resource setup (Azure)
 
@@ -24,11 +24,11 @@ This solution sits in a single Azure Resource Group, which typically contains:
 * Azure SQL Database (source for incremental ingestion).
 * Self-Hosted Integration Runtime (SHIR) host (VM/Server) that can reach your on-prem file path.
 
- <img src="Reasource group" alt="Azure Resource Group " />
+ <img src="https://github.com/pninad9/Azure-Data-Factory-End-to-End-Project-On_Prem-API-SQL/blob/0402797e21add6a7950eb2ce25ad733a9aa5e055/ScreenShot/Reasource%20group.png" />
 
 ### Self-Hosted Integration Runtime (SHIR)
 
-<img src="SHIR" />
+<img src="https://github.com/pninad9/Azure-Data-Factory-End-to-End-Project-On_Prem-API-SQL/blob/0402797e21add6a7950eb2ce25ad733a9aa5e055/ScreenShot/SHIR.png" />
 
 
 ## Ingestion — ADF (Bronze)
@@ -48,13 +48,13 @@ Goal: land raw data reliably and quickly, with minimal coupling to schema, so up
     * Copy from on-prem path (via SHIR) → ADLS bronze/onprem/.
     * No column mapping in Bronze (just land the bytes).
 
-<img src="on prem" />
+<img src="https://github.com/pninad9/Azure-Data-Factory-End-to-End-Project-On_Prem-API-SQL/blob/0402797e21add6a7950eb2ce25ad733a9aa5e055/ScreenShot/bronze%20onprem%20inguestion%20for%20each.png" />
 
 * api_ingustion
     * Web/HTTP + Copy to fetch GitHub raw endpoint and land JSON in bronze/github/.
     * Note: Always use the raw URL to avoid HTML payloads.
 
-<img src="api" />
+<img src="https://github.com/pninad9/Azure-Data-Factory-End-to-End-Project-On_Prem-API-SQL/blob/0402797e21add6a7950eb2ce25ad733a9aa5e055/ScreenShot/bronze%20API%20inguestion.png" />
 
 * sqltodatalake (Incremental without watermark tables)
     * Lookup A: SELECT MAX(booking_date) AS LatestLoad FROM dbo.FactBookings
@@ -62,7 +62,7 @@ Goal: land raw data reliably and quickly, with minimal coupling to schema, so up
     * Copy: WHERE booking_date > @lastload AND booking_date <= @latestload → bronze/sql/
     * Write-back: update the state JSON with the new lastload.
 
-<img src="sqltoadls" />
+<img src="https://github.com/pninad9/Azure-Data-Factory-End-to-End-Project-On_Prem-API-SQL/blob/0402797e21add6a7950eb2ce25ad733a9aa5e055/ScreenShot/bronze%20sqltodatalake.png" />
 
 # Why this design
 * Idempotent: re-runs won’t duplicate data.
@@ -79,7 +79,7 @@ Goal: single entry point that runs all Bronze ingestion pipelines in a controlle
     * REST API → `api_ingustion`
     * Azure SQL incremental → `sqltodatalake`
 
-<img src="Bronze parent" />
+<img src="https://github.com/pninad9/Azure-Data-Factory-End-to-End-Project-On_Prem-API-SQL/blob/0402797e21add6a7950eb2ce25ad733a9aa5e055/ScreenShot/bronze%20pipeline.png" />
 
 ## Standardised Delta (Silver Layer)
 
@@ -101,7 +101,7 @@ Goal: convert raw landings into typed, consistent, analytics-ready Delta while p
     * Schema drift: enable only where sources evolve often; otherwise validate strictly to catch regressions
     * Partitioning (optional): by date/tenant to speed downstream joins/aggregates.
 
-<img src="silver" />
+<img src="https://github.com/pninad9/Azure-Data-Factory-End-to-End-Project-On_Prem-API-SQL/blob/0402797e21add6a7950eb2ce25ad733a9aa5e055/ScreenShot/silver%20data%20transformation%20data%20flow.png" />
 
 ## Curated Business Views (Gold Layer)
 
@@ -117,7 +117,7 @@ Goal: deliver business-friendly views with clear value (e.g., Top airlines by re
     * Pre-aggregate enough to keep BI fast; leave drill-downs to Silver.
     * Keep transformation logic deterministic and auditable.
 
-<img src="gold" />
+<img src="https://github.com/pninad9/Azure-Data-Factory-End-to-End-Project-On_Prem-API-SQL/blob/0402797e21add6a7950eb2ce25ad733a9aa5e055/ScreenShot/gold%20business%20view%20with%20data%20flow.png" />
 
 ## Parent Pipeline (Orchestration)
 
@@ -133,7 +133,11 @@ Goal: single‑entry pipeline that runs all layers with guardrails.
     * Idempotent re‑runs (incremental query + watermark JSON).
     * Ready to attach a Schedule trigger (e.g., daily 00:00 UTC) and optional alerting (Logic App / email) on failure.
 
-<img src="parent pipline" />
+<img src="https://github.com/pninad9/Azure-Data-Factory-End-to-End-Project-On_Prem-API-SQL/blob/0402797e21add6a7950eb2ce25ad733a9aa5e055/ScreenShot/Parent%20Pipeline.png" />
+
+## Business View
+
+<img src="https://github.com/pninad9/Azure-Data-Factory-End-to-End-Project-On_Prem-API-SQL/blob/0402797e21add6a7950eb2ce25ad733a9aa5e055/ScreenShot/Business%20view.png" />
 
 ## Final Word
 
